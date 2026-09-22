@@ -1,0 +1,32 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+  "name": "io.github.mckellen-eth/galactic-bridge-mcp",
+  "description": "Find LayerZero OFT bridge routes by token contract address and build ready-to-sign cross-chain transactions across 14 EVM networks.",
+  "title": "Galactic Bridge",
+  "websiteUrl": "https://galacticbridge.app",
+  "repository": {
+    "url": "https://github.com/mckellen-eth/galactic-bridge-mcp",
+    "source": "github"
+  },
+  "version": "0.1.0",
+  "packages": [
+    {
+      "registryType": "npm",
+      "registryBaseUrl": "https://registry.npmjs.org",
+      "identifier": "galactic-bridge-mcp",
+      "version": "0.1.0",
+      "runtimeHint": "npx",
+      "transport": {
+        "type": "stdio"
+      },
+      "environmentVariables": [
+        {
+          "name": "GB_PRIVATE_KEY",
+          "description": "OPTIONAL. Set to enable the execute_bridge tool (signs and broadcasts). Leave unset for safe, read-only mode.",
+          "isRequired": false,
+          "isSecret": true
+        }
+      ]
+    }
+  ]
+}
