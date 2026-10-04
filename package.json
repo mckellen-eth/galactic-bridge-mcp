@@ -1,6 +1,7 @@
 {
   "name": "galactic-bridge-mcp",
-  "version": "0.1.0",
+  "version": "0.1.1",
+  "mcpName": "io.github.mckellen-eth/galactic-bridge-mcp",
   "description": "MCP server for Galactic Bridge — find LayerZero OFT bridge routes by token contract address and build ready-to-sign cross-chain transactions across 14 EVM networks.",
   "type": "module",
   "author": "mckellen-eth",
