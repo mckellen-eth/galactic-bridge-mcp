@@ -1,7 +1,7 @@
 {
   "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
   "name": "io.github.mckellen-eth/galactic-bridge-mcp",
-  "description": "Find LayerZero OFT bridge routes by token contract address and build ready-to-sign cross-chain transactions across 14 EVM networks.",
+  "description": "Find LayerZero OFT bridge routes by contract address across 14 EVM networks.",
   "title": "Galactic Bridge",
   "websiteUrl": "https://galacticbridge.app",
   "repository": {
