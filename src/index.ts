@@ -15,7 +15,7 @@ import { scanToken } from './api.js';
 import { buildBridgeRoute } from './build.js';
 import { isSigningEnabled, signAndSend } from './signer.js';
 
-const server = new McpServer({ name: 'galactic-bridge', version: '0.1.0' });
+const server = new McpServer({ name: 'galactic-bridge', version: '0.1.2' });
 
 const text = (obj: unknown) => ({
   content: [{ type: 'text' as const, text: typeof obj === 'string' ? obj : JSON.stringify(obj, null, 2) }],
@@ -27,6 +27,13 @@ server.tool(
   'list_supported_networks',
   'List the EVM networks Galactic Bridge supports, with their chain key, chainId, LayerZero endpoint id (eid) and native gas symbol. Use the `key` values when calling the other tools.',
   {},
+  {
+    title: 'List supported networks',
+    readOnlyHint: true,
+    destructiveHint: false,
+    idempotentHint: true,
+    openWorldHint: false,
+  },
   async () => text(
     Object.values(NETWORKS).map((n) => ({
       key: n.key, name: n.name, chainId: n.chainId, eid: n.eid, nativeSymbol: n.nativeSym,
@@ -41,6 +48,13 @@ server.tool(
   {
     token: z.string().describe('The token contract address (0x…). Works on any of the supported networks.'),
     fromChain: z.string().optional().describe('Optional network key to start the scan from (e.g. "bsc"). Auto-detected if omitted.'),
+  },
+  {
+    title: 'Scan token networks',
+    readOnlyHint: true,
+    destructiveHint: false,
+    idempotentHint: true,
+    openWorldHint: true,
   },
   async ({ token, fromChain }) => {
     try {
@@ -78,6 +92,13 @@ server.tool(
     decimals: z.number().int().optional().describe('Token decimals. Read automatically if omitted; pass explicitly to be certain.'),
     oftContract: z.string().optional().describe('Optional: the OFT contract address, if you already know it (skips discovery).'),
   },
+  {
+    title: 'Find bridge route',
+    readOnlyHint: true,
+    destructiveHint: false,
+    idempotentHint: true,
+    openWorldHint: true,
+  },
   async (args) => {
     try {
       const r = await buildBridgeRoute(args);
@@ -101,6 +122,13 @@ if (isSigningEnabled()) {
       recipient: z.string().describe('Recipient address on the destination network.'),
       decimals: z.number().int().optional().describe('Token decimals (read automatically if omitted).'),
       oftContract: z.string().optional().describe('Optional known OFT contract address.'),
+    },
+    {
+      title: 'Execute bridge (sign & broadcast)',
+      readOnlyHint: false,
+      destructiveHint: true,
+      idempotentHint: false,
+      openWorldHint: true,
     },
     async (args) => {
       try {
