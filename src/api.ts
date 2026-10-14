@@ -4,13 +4,18 @@
 
 const BASE_URL = (process.env.GB_API_URL || 'https://galacticbridge.app').replace(/\/+$/, '');
 
+// Single source of truth for the server version. Imported by index.ts for the
+// MCP handshake, and used below so MCP traffic is self-identifying in logs.
+export const VERSION = '0.1.3';
+const USER_AGENT = `galactic-bridge-mcp/${VERSION}`;
+
 async function getJson(path: string, params: Record<string, string | undefined>): Promise<any> {
   const qs = new URLSearchParams();
   for (const [k, v] of Object.entries(params)) {
     if (v !== undefined && v !== null && v !== '') qs.set(k, v);
   }
   const url = `${BASE_URL}${path}?${qs.toString()}`;
-  const res = await fetch(url, { headers: { Accept: 'application/json' } });
+  const res = await fetch(url, { headers: { Accept: 'application/json', 'User-Agent': USER_AGENT } });
   const text = await res.text();
   let body: any;
   try {

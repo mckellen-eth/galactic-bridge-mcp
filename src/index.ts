@@ -11,11 +11,11 @@ import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js'
 import { z } from 'zod';
 
 import { NETWORKS, NETWORK_KEYS } from './networks.js';
-import { scanToken } from './api.js';
+import { scanToken, VERSION } from './api.js';
 import { buildBridgeRoute } from './build.js';
 import { isSigningEnabled, signAndSend } from './signer.js';
 
-const server = new McpServer({ name: 'galactic-bridge', version: '0.1.2' });
+const server = new McpServer({ name: 'galactic-bridge', version: VERSION });
 
 const text = (obj: unknown) => ({
   content: [{ type: 'text' as const, text: typeof obj === 'string' ? obj : JSON.stringify(obj, null, 2) }],
